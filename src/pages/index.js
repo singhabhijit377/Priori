@@ -8,7 +8,11 @@ import axios from "axios";
 
 const Home = () => {
   const [id, setId] = useState("demo.eth");
-  const { data: AssetDetails, dataUpdatedAt } = useGetAssetDetails(id);
+  const {
+    data: AssetDetails,
+    dataUpdatedAt,
+    isLoading,
+  } = useGetAssetDetails(id);
 
   console.log("AssetDetails are : ", AssetDetails);
 
@@ -64,8 +68,6 @@ const Home = () => {
     [dataUpdatedAt]
   );
 
-  console.log("DataList is ", DataList);
-
   return (
     <div>
       <AppBar />
@@ -73,12 +75,14 @@ const Home = () => {
       <div className="w-full flex justify-center mt-4">
         <SearchBar setSearch={setId} />
       </div>
-      <div className="mt-8">
-        
-
-      </div>
+      <div className="mt-8"></div>
       <div className="px-4 mt-6">
-        <Table columns={columns} data={DataList} />
+        <Table
+          columns={columns}
+          data={DataList}
+          fetchingData={isLoading}
+          emptyText={`No Data to display for this address (${id})`}
+        />
       </div>
     </div>
   );
